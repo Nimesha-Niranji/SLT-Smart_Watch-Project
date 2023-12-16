@@ -6,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 
-const LoginScreen = () => {
+const LoginScreen = ({navigation}) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -66,7 +66,7 @@ const LoginScreen = () => {
             <View style={{flex:1, height:1, backgroundColor:'#808080', marginHorizontal:10}} />
         </View>
 
-        <TouchableOpacity title='Register' style={styles.loginBtn} >
+        <TouchableOpacity title='Register' style={styles.loginBtn} onPress={() => navigation.navigate('Register')} >
             <Text style={styles.textLoginBtn} >Register</Text>
         </TouchableOpacity>
 
