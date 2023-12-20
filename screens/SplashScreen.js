@@ -14,7 +14,7 @@ const SplashScreen = ({navigation}) => {
 
       <StatusBar barStyle="light-content" hidden={false} backgroundColor="#000080"  />
       <LottieView source={require('../assets/aniwatch.json')} style={styles.lottie} resizeMode='contain' autoPlay loop />
-      <TouchableOpacity title='Get Started' style={styles.button} onPress={() => navigation.navigate('Login')} >
+      <TouchableOpacity title='Get Started' style={styles.button} onPress={() => navigation.replace('Login')}  >
         <Text style={styles.text} >Get Started</Text>
       </TouchableOpacity>
       <Image source={require('../assets/logoEmb.png')} style={styles.logoEmb} resizeMode='contain' />

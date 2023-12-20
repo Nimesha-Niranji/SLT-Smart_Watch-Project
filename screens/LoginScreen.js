@@ -1,31 +1,55 @@
 import React, {useEffect, useState} from 'react'
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity, StatusBar } from 'react-native'
 import LottieView from 'lottie-react-native'
 import { Input } from '@rneui/base';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { auth } from '../firebase';
 
 
 const LoginScreen = ({navigation}) => {
 
+  const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isPasswordShown, setIsPasswordShown] = useState(false);
+
+  const signIn = () => {
+    auth.signInWithEmailAndPassword(email, password)
+    
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      alert(errorMessage);
+    });
+  };
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(function(user) {
+      if (user) {
+          navigation.navigate('Home');
+      } else {
+          navigation.canGoBack() && navigation.popToTop();
+      }
+    });
+    return unsubscribe
+  },[])
 
   return (
     <SafeAreaProvider style={{ flex: 1, backgroundColor: '#000080'}} >
     <View style={styles.container} >
 
+        <StatusBar barStyle="light-content" hidden={false} backgroundColor="#000080"  />
         <LottieView source={require('../assets/login.json')} style={styles.lottie} resizeMode='contain' autoPlay />
         <Text style={styles.text} >Login</Text>
         <Input 
             style= {styles.input}
-            placeholder='Enter Device ID'
-            //value={email}
-            label= 'Device ID'
+            placeholder='Enter Email'
+            value={email}
+            label= 'Email'
             labelStyle = {styles.label}
-            leftIcon={{type:'material', name:'devices', color: 'white'}}
-            leftIconContainerStyle= {styles.leftIcon} />
+            leftIcon={{type:'material', name:'email', color: 'white'}}
+            leftIconContainerStyle= {styles.leftIcon}
+            onChangeText={text => setEmail(text)} />
 
         <View style={styles.passwordView}>
         <Input 
@@ -35,7 +59,9 @@ const LoginScreen = ({navigation}) => {
             labelStyle = {styles.label}
             leftIcon={{type:'material', name:'lock', color: 'white'}}
             leftIconContainerStyle = {styles.leftIcon}
-            secureTextEntry= {isPasswordShown} /> 
+            secureTextEntry= {isPasswordShown}
+            value={password}
+            onChangeText={text => setPassword(text)} /> 
 
         <TouchableOpacity 
             onPress={() => setIsPasswordShown(!isPasswordShown)}
@@ -50,7 +76,7 @@ const LoginScreen = ({navigation}) => {
         </TouchableOpacity>
         </View>    
 
-        <TouchableOpacity title='Login' style={styles.loginBtn} >
+        <TouchableOpacity title='Login' style={styles.loginBtn} onPress={signIn} >
             <Text style={styles.textLoginBtn} >Login</Text>
         </TouchableOpacity>
 
@@ -68,6 +94,16 @@ const LoginScreen = ({navigation}) => {
 
         <TouchableOpacity title='Register' style={styles.loginBtn} onPress={() => navigation.navigate('Register')} >
             <Text style={styles.textLoginBtn} >Register</Text>
+        </TouchableOpacity>
+
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 20 }} >
+            <View style={{flex:1, height:1, backgroundColor:'#808080', marginHorizontal:10}} />
+            <Text style={{ fontSize: 16, color:'#808080', }}>Or Skip</Text>
+            <View style={{flex:1, height:1, backgroundColor:'#808080', marginHorizontal:10}} />
+        </View>
+
+        <TouchableOpacity title='Skip' style={styles.loginBtn} >
+            <Text style={styles.textLoginBtn} >Skip</Text>
         </TouchableOpacity>
 
     </View>
