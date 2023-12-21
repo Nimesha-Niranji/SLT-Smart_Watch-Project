@@ -26,7 +26,7 @@ const LoginScreen = ({navigation}) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(function(user) {
       if (user) {
-          navigation.navigate('Home');
+          navigation.navigate('BottomTabNavigator');
       } else {
           navigation.canGoBack() && navigation.popToTop();
       }

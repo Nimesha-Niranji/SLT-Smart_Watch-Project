@@ -1,18 +1,16 @@
 import React from 'react'
-import { View, Text, StatusBar, StyleSheet } from 'react-native'
+import { StatusBar, Text, View, StyleSheet } from 'react-native'
 
-const HomeScreen = () => {
+const DeviceConfigScreen = () => {
   return (
     <View style={styles.container} >
       <StatusBar barStyle="light-content" hidden={false} backgroundColor="#000080" />
-        <Text>
-            Hello Home Page
-        </Text>
+        <Text>Hello device config</Text>
     </View>
   )
 }
 
-export default HomeScreen
+export default DeviceConfigScreen
 
 const styles = StyleSheet.create({
 
