@@ -11,6 +11,7 @@ import HomeScreen from './screens/HomeScreen';
 import DeviceConfigScreen from './screens/DeviceConfigScreen';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import MapDisplay from './screens/MapDisplay'
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -67,6 +68,7 @@ export default function App() {
         <Stack.Screen name='Register' component={RegisterScreen} />
         <Stack.Screen name='RegisterDone' component={RegisterDoneScreen} />
         <Stack.Screen name='BottomTabNavigator' component={BottomTabNavigator} />
+        <Stack.Screen name='Map' component={MapDisplay} />
       </Stack.Navigator>
     </NavigationContainer>
   );
