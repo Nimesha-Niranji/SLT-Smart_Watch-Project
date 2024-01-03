@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { View, StyleSheet, Text, TouchableOpacity, StatusBar } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity, StatusBar, ScrollView} from 'react-native'
 import LottieView from 'lottie-react-native'
 import { Input } from '@rneui/base';
 import { Ionicons } from '@expo/vector-icons';
@@ -36,11 +36,16 @@ const LoginScreen = ({navigation}) => {
 
   return (
     <SafeAreaProvider style={{ flex: 1, backgroundColor: '#000080'}} >
+    <ScrollView contentContainerStyle={{flexGrow:1}} showsVerticalScrollIndicator={false} >
     <View style={styles.container} >
 
         <StatusBar barStyle="light-content" hidden={false} backgroundColor="#000080"  />
+        <View style={styles.container4}>
         <LottieView source={require('../assets/login.json')} style={styles.lottie} resizeMode='contain' autoPlay />
         <Text style={styles.text} >Login</Text>
+        </View>
+
+        <View style={styles.container2}>
         <Input 
             style= {styles.input}
             placeholder='Enter Email'
@@ -62,7 +67,7 @@ const LoginScreen = ({navigation}) => {
             secureTextEntry= {isPasswordShown}
             value={password}
             onChangeText={text => setPassword(text)} /> 
-
+        
         <TouchableOpacity 
             onPress={() => setIsPasswordShown(!isPasswordShown)}
             style={styles.isPassword} >
@@ -75,7 +80,9 @@ const LoginScreen = ({navigation}) => {
             }    
         </TouchableOpacity>
         </View>    
+        </View>
 
+        <View style={styles.container3}>
         <TouchableOpacity title='Login' style={styles.loginBtn} onPress={signIn} >
             <Text style={styles.textLoginBtn} >Login</Text>
         </TouchableOpacity>
@@ -105,8 +112,10 @@ const LoginScreen = ({navigation}) => {
         <TouchableOpacity title='Skip' style={styles.loginBtn} >
             <Text style={styles.textLoginBtn} >Skip</Text>
         </TouchableOpacity>
+        </View>
 
     </View>
+    </ScrollView>
     </SafeAreaProvider>
   )
 }
@@ -120,6 +129,21 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     //justifyContent: 'center',
     backgroundColor: '#000080',
+    //alignItems: 'center',
+  },
+
+  container2:{
+    height:'28%',
+    alignItems: 'center',
+  },
+
+  container3:{
+    //height:'40%',
+    alignItems: 'center',
+  },
+
+  container4:{
+    height:'23%',
     alignItems: 'center',
   },
 
@@ -158,7 +182,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#71FF88',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop:20
+    //marginTop:20,
   },
 
   textLoginBtn: {
