@@ -6,14 +6,13 @@ import '@react-native-firebase/auth'
 import {getDatabase} from 'firebase/database'
 
 var firebaseConfig = {
-    apiKey: "AIzaSyD4w-28B8IUPVGz67gV-ZfRzQso4L88oCk",
-    authDomain: "new2-94753.firebaseapp.com",
-    databaseURL: "https://new2-94753-default-rtdb.firebaseio.com",
-    projectId: "new2-94753",
-    storageBucket: "new2-94753.appspot.com",
-    messagingSenderId: "870732000973",
-    appId: "1:870732000973:web:26537c655b90d747b94384",
-    measurementId: "G-EJBMW2GZF4"
+  apiKey: "AIzaSyDlNP42riCPo2lvGK-W5-FqcD0mn7YxTHQ",
+  authDomain: "smartwatch-752a1.firebaseapp.com",
+  projectId: "smartwatch-752a1",
+  storageBucket: "smartwatch-752a1.appspot.com",
+  messagingSenderId: "407733372976",
+  appId: "1:407733372976:web:faa23a736c4a047de805f5",
+  measurementId: "G-CX17P057ZB"
 };
 
 let app;
@@ -28,4 +27,4 @@ const db = app.firestore();
 const auth = firebase.auth();
 const db2 = getDatabase();
 
-export {db, auth, db2};
+export {db, auth, db2, firebase};
