@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, StatusBar } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, StatusBar, ScrollView } from 'react-native'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import LottieView from 'lottie-react-native'
 import { Input } from '@rneui/base'
@@ -14,30 +14,62 @@ const RegisterScreen = ({navigation}) => {
     const [name, setName] = useState('');
     const [imageUrl, setImageurl] = useState('');
     const [deviceID, setDeviceID] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const register = () => {
         
-        auth.createUserWithEmailAndPassword(email, password)
+        if (!email || !password || !name) {
+        alert('Please fill in Email, Password and Name fields');
+        return;
+    }
+
+    setLoading(true);
+
+    auth.createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
-            // Signed up 
-            var user = userCredential.user;
-            user.updateProfile(auth.currentUser, {
-            displayName: name,displayID: deviceID, photoURL: imageUrl ? imageUrl: "https://www.seekpng.com/png/detail/115-1150053_avatar-png-transparent-png-royalty-free-default-user.png"
-            }).then(() => {
-            // Profile updated!
-            }).catch((error) => {
-            // An error occurred
+            const user = userCredential.user;
+            // Update user profile
+            user.updateProfile({
+                displayName: name,
+                photoURL: imageUrl || "https://www.seekpng.com/png/detail/115-1150053_avatar-png-transparent-png-royalty-free-default-user.png",
+            })
+            .then(() => {
+                // Profile updated successfully
+                // const userAdditionalInfo = {
+                //     deviceID: deviceID,
+                //     // Add more fields if needed
+                // };
+
+                // // Store the additional information in Firebase Firestore
+                // db.collection('users').doc(user.uid).set(userAdditionalInfo)
+                //     .then(() => {
+                //         // Additional information stored successfully
+                //     })
+                //     .catch((error) => {
+                //         console.error('Error storing additional information:', error.message);
+                // });
+            })
+            .catch((error) => {
+                // Handle profile update error
+                console.error('Profile update error:', error.message);
+            })
+            .finally(() => {
+                setLoading(false);
             });
-            navigation.navigate('RegisterDone');
+
+            navigation.navigate('RegisterDone', { deviceID: deviceID });
         })
         .catch((error) => {
+            // Handle registration error
             const errorMessage = error.message;
-            alert(errorMessage)
+            alert(errorMessage);
+            setLoading(false);
         });
     }
 
   return (
     <SafeAreaProvider style={{ flex: 1, backgroundColor: '#000080'}} >
+    <ScrollView contentContainerStyle={{flexGrow:1}} showsVerticalScrollIndicator={false} >
     <View style={styles.container}>
         <StatusBar barStyle="light-content" hidden={false} backgroundColor="#000080"  />
         <LottieView source={require('../assets/register.json')} style={styles.lottie} resizeMode='contain' autoPlay />
@@ -113,6 +145,7 @@ const RegisterScreen = ({navigation}) => {
         </TouchableOpacity>
 
     </View>
+    </ScrollView>
     </SafeAreaProvider>
   )
 }
@@ -126,7 +159,7 @@ const styles = StyleSheet.create({
       flexDirection: 'column',
       //justifyContent: 'center',
       backgroundColor: '#000080',
-      alignItems: 'center'
+      alignItems: 'center',
     },
 
     lottie:{
