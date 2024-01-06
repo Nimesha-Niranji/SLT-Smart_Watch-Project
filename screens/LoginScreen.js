@@ -109,7 +109,7 @@ const LoginScreen = ({navigation}) => {
             <View style={{flex:1, height:1, backgroundColor:'#808080', marginHorizontal:10}} />
         </View>
 
-        <TouchableOpacity title='Skip' style={styles.loginBtn} >
+        <TouchableOpacity title='Skip' style={styles.loginBtn} onPress={() => navigation.navigate('Skip')} >
             <Text style={styles.textLoginBtn} >Skip</Text>
         </TouchableOpacity>
         </View>

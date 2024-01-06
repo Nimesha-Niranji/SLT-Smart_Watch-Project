@@ -12,6 +12,7 @@ import DeviceConfigScreen from './screens/DeviceConfigScreen';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import MapDisplay from './screens/MapDisplay'
+import SkipScreen from './screens/SkipScreen'
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -69,6 +70,7 @@ export default function App() {
         <Stack.Screen name='RegisterDone' component={RegisterDoneScreen} />
         <Stack.Screen name='BottomTabNavigator' component={BottomTabNavigator} />
         <Stack.Screen name='Map' component={MapDisplay} />
+        <Stack.Screen name='Skip' component={SkipScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
